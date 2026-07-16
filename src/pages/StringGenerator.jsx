@@ -28,13 +28,6 @@ const DEFAULT_OPTIONS = {
   excludeAmbiguous: true,
 }
 
-const STRENGTH_BAR = {
-  weak: 'bg-red-500',
-  fair: 'bg-amber-500',
-  strong: 'bg-emerald-500',
-  excellent: 'bg-emerald-400',
-}
-
 export default function StringGenerator() {
   useDocumentTitle('Anvil — String Generator')
   const notify = useToast()
@@ -138,8 +131,10 @@ export default function StringGenerator() {
         <p className="font-mono text-xs tracking-wider text-ember-600 uppercase dark:text-ember-400">
           String Generator
         </p>
-        <h1 className="mt-2 font-display text-2xl font-semibold text-ink-900 sm:text-3xl dark:text-ink-50">
-          Forge a random string.
+        <h1 className="mt-2 font-display text-2xl font-semibold sm:text-3xl">
+          <span className="text-gradient bg-linear-to-r from-ink-900 to-ink-700 dark:from-ink-50 dark:to-ink-200">
+            Forge a random string.
+          </span>
         </h1>
         <p className="mt-2 max-w-xl text-sm text-ink-500 dark:text-ink-400">
           Tune the options and the result updates live, drawn from{' '}
@@ -159,15 +154,15 @@ export default function StringGenerator() {
             results.map((value, index) => (
               <div
                 key={`${value}-${index}`}
-                className="flex items-center justify-between gap-3 rounded-2xl border border-ink-200 bg-white/70 px-4 py-3 dark:border-ink-800 dark:bg-ink-900/40"
+                className="group flex items-center justify-between gap-3 rounded-2xl border border-ink-200 bg-white/80 px-4 py-3 shadow-sm transition-shadow hover:shadow dark:border-ink-800 dark:bg-ink-900/50"
               >
-                <span className="truncate font-mono text-[15px] text-ink-800 select-all dark:text-ink-100">
+                <span className="truncate font-mono text-[15px] tracking-wide text-ink-800 select-all dark:text-ink-100">
                   {value}
                 </span>
                 <button
                   type="button"
                   onClick={() => copyOne(value, index)}
-                  className="shrink-0 rounded-lg p-1.5 text-ink-400 hover:bg-ink-100 dark:hover:bg-ink-800"
+                  className="shrink-0 rounded-lg p-1.5 text-ink-400 transition-colors hover:bg-ink-100 hover:text-ink-700 dark:hover:bg-ink-800 dark:hover:text-ink-200"
                   aria-label="Copy string"
                 >
                   {copiedIndex === index ? (
@@ -184,7 +179,7 @@ export default function StringGenerator() {
             <button
               type="button"
               onClick={handleGenerate}
-              className="flex items-center gap-1.5 rounded-full bg-ink-900 px-4 py-2 text-xs font-medium text-white transition-transform hover:-translate-y-px active:translate-y-0 dark:bg-ember-500 dark:text-ink-950"
+              className="flex items-center gap-1.5 rounded-full bg-linear-to-r from-ink-900 to-ink-800 px-4 py-2 text-xs font-medium text-white shadow-sm transition-all hover:-translate-y-px hover:shadow active:translate-y-0 dark:from-ember-500 dark:to-ember-600 dark:text-ink-950"
             >
               <RefreshCw className="h-3.5 w-3.5" />
               Regenerate
@@ -201,7 +196,7 @@ export default function StringGenerator() {
           </div>
         </div>
 
-        <div className="space-y-5 rounded-2xl border border-ink-200 bg-white/70 p-5 dark:border-ink-800 dark:bg-ink-900/40">
+        <div className="space-y-5 rounded-2xl border border-ink-200 bg-white/80 p-5 shadow-sm dark:border-ink-800 dark:bg-ink-900/50">
           <div>
             <div className="mb-1.5 flex items-center justify-between text-xs font-medium text-ink-500 dark:text-ink-400">
               <span>Length</span>
@@ -274,13 +269,19 @@ export default function StringGenerator() {
               <span className="font-medium text-ink-500 dark:text-ink-400">Strength</span>
               <span className="font-mono text-ink-800 dark:text-ink-100">{entropyBits} bits</span>
             </div>
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-ink-100 dark:bg-ink-800">
+            <div className="h-2 w-full overflow-hidden rounded-full bg-ink-100 dark:bg-ink-800">
               <div
-                className={clsx('h-full rounded-full transition-all', STRENGTH_BAR[strength.tone])}
+                className={clsx(
+                  'h-full rounded-full transition-all duration-500',
+                  strength.tone === 'weak' && 'bg-linear-to-r from-red-600 to-red-500',
+                  strength.tone === 'fair' && 'bg-linear-to-r from-amber-500 to-yellow-400',
+                  strength.tone === 'strong' && 'bg-linear-to-r from-emerald-600 to-emerald-400',
+                  strength.tone === 'excellent' && 'bg-linear-to-r from-emerald-500 to-teal-400',
+                )}
                 style={{ width: `${Math.min(100, (entropyBits / 128) * 100)}%` }}
               />
             </div>
-            <p className="mt-1 text-xs text-ink-400">{strength.label}</p>
+            <p className="mt-1.5 text-xs text-ink-400">{strength.label}</p>
           </div>
         </div>
       </div>
