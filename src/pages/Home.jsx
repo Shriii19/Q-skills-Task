@@ -29,8 +29,14 @@ export default function Home() {
         <p className="font-mono text-xs tracking-wider text-ember-600 uppercase dark:text-ember-400">
           Overview
         </p>
-        <h1 className="mt-2 font-display text-3xl font-semibold text-ink-900 sm:text-4xl dark:text-ink-50">
-          A small workshop for everyday text.
+        <h1 className="mt-2 font-display text-3xl font-semibold sm:text-4xl">
+          <span className="text-gradient bg-linear-to-r from-ink-900 via-ink-800 to-ink-700 dark:from-ink-50 dark:via-ink-100 dark:to-ink-200">
+            A small workshop
+          </span>
+          <br />
+          <span className="text-gradient bg-linear-to-r from-ember-600 to-ember-500 dark:from-ember-400 dark:to-ember-300">
+            for everyday text.
+          </span>
         </h1>
         <p className="mt-3 max-w-xl text-[15px] text-ink-500 dark:text-ink-400">
           Two focused tools, no clutter: translate a passage into another language, or forge a
@@ -72,9 +78,12 @@ export default function Home() {
 
       <motion.div
         variants={item}
-        className="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-ink-200 pt-6 text-xs text-ink-400 dark:border-ink-800"
+        className="flex flex-wrap items-center gap-x-6 gap-y-2 rounded-xl border border-ink-100 bg-ink-50/60 px-4 py-3 text-xs text-ink-400 dark:border-ink-800/60 dark:bg-ink-900/20"
       >
-        <span>Built with React, Tailwind CSS &amp; React Router</span>
+        <span className="flex items-center gap-1.5">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+          Built with React, Tailwind CSS &amp; React Router
+        </span>
         {lastTranslation && (
           <span>
             Last translated to {languageName(lastTranslation.targetLang)} ·{' '}
@@ -90,15 +99,16 @@ function ToolCard({ to, icon: Icon, title, description, stat, preview }) {
   return (
     <Link
       to={to}
-      className="group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-ink-200 bg-white/70 p-6 transition-all hover:-translate-y-0.5 hover:border-ember-500/40 hover:shadow-lg hover:shadow-ink-950/5 dark:border-ink-800 dark:bg-ink-900/40"
+      className="group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-ink-200 bg-white/70 p-6 transition-all duration-200 hover:-translate-y-1 hover:border-ember-500/40 hover:shadow-xl hover:shadow-ink-950/8 dark:border-ink-800 dark:bg-ink-900/40 dark:hover:border-ember-500/30 dark:hover:shadow-ink-950/30"
     >
-      <div className="flex items-start justify-between">
-        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-ink-900 text-ember-400 dark:bg-ember-500/15 dark:text-ember-400">
+      <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-ember-500/0 to-ember-500/0 transition-all duration-300 group-hover:from-ember-500/3 group-hover:to-transparent dark:group-hover:from-ember-500/6" />
+      <div className="relative flex items-start justify-between">
+        <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-linear-to-br from-ink-800 to-ink-950 text-ember-400 shadow-md shadow-ink-950/20 transition-transform duration-200 group-hover:scale-105 dark:from-ember-500/20 dark:to-ember-600/10 dark:text-ember-400 dark:shadow-none">
           <Icon className="h-5 w-5" strokeWidth={1.75} />
         </span>
-        <ArrowUpRight className="h-4 w-4 text-ink-300 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-ember-500 dark:text-ink-600" />
+        <ArrowUpRight className="h-4 w-4 text-ink-300 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-ember-500 dark:text-ink-600" />
       </div>
-      <div>
+      <div className="relative">
         <h2 className="font-display text-lg font-semibold text-ink-900 dark:text-ink-50">
           {title}
         </h2>
@@ -106,7 +116,7 @@ function ToolCard({ to, icon: Icon, title, description, stat, preview }) {
           {description}
         </p>
       </div>
-      <div className="mt-auto space-y-1.5 border-t border-ink-100 pt-3 dark:border-ink-800">
+      <div className="relative mt-auto space-y-1.5 rounded-xl border border-ink-100 bg-ink-50/60 px-3 py-2.5 dark:border-ink-800 dark:bg-ink-800/30">
         <p className="truncate font-mono text-xs text-ink-400 dark:text-ink-500">{preview}</p>
         <p className="text-xs font-medium text-ember-600 dark:text-ember-400">{stat}</p>
       </div>
