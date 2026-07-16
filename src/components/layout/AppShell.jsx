@@ -30,10 +30,11 @@ export default function AppShell() {
 
   return (
     <div className="min-h-dvh dark:bg-ink-950">
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 flex-col border-r border-ink-200 bg-white/60 backdrop-blur-sm md:flex dark:border-ink-800 dark:bg-ink-900/40">
-        <div className="px-5 pt-6 pb-2">
+      <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 flex-col border-r border-ink-200 bg-white/70 backdrop-blur-md md:flex dark:border-ink-800 dark:bg-ink-900/50">
+        <div className="px-5 pt-6 pb-4">
           <BrandMark />
         </div>
+        <div className="mx-3 mb-4 h-px bg-linear-to-r from-transparent via-ink-200 to-transparent dark:via-ink-800" />
         <NavItems />
         <Footer theme={theme} toggleTheme={toggleTheme} />
       </aside>
@@ -109,7 +110,7 @@ export default function AppShell() {
 
 function NavItems() {
   return (
-    <nav className="flex flex-1 flex-col gap-1 px-3">
+    <nav className="flex flex-1 flex-col gap-0.5 px-3">
       {NAV_ITEMS.map(({ to, label, icon: Icon, end }) => (
         <NavLink
           key={to}
@@ -117,15 +118,28 @@ function NavItems() {
           end={end}
           className={({ isActive }) =>
             clsx(
-              'group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+              'group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-150',
               isActive
-                ? 'bg-ember-500/10 text-ember-600 dark:text-ember-400'
-                : 'text-ink-500 hover:bg-ink-100 hover:text-ink-800 dark:text-ink-400 dark:hover:bg-ink-800/60 dark:hover:text-ink-100',
+                ? 'bg-linear-to-r from-ember-500/15 to-ember-500/5 text-ember-600 shadow-sm dark:from-ember-500/20 dark:to-ember-500/5 dark:text-ember-400'
+                : 'text-ink-500 hover:bg-ink-100/80 hover:text-ink-800 dark:text-ink-400 dark:hover:bg-ink-800/50 dark:hover:text-ink-100',
             )
           }
         >
-          <Icon className="h-4 w-4 shrink-0" strokeWidth={2} />
-          {label}
+          {({ isActive }) => (
+            <>
+              {isActive && (
+                <span className="absolute left-0 top-1/2 h-5 w-0.75 -translate-y-1/2 rounded-r-full bg-ember-500" />
+              )}
+              <Icon
+                className={clsx(
+                  'h-4 w-4 shrink-0 transition-transform duration-150',
+                  'group-hover:scale-110',
+                )}
+                strokeWidth={isActive ? 2.25 : 2}
+              />
+              {label}
+            </>
+          )}
         </NavLink>
       ))}
     </nav>
@@ -134,13 +148,19 @@ function NavItems() {
 
 function BrandMark() {
   return (
-    <div className="flex items-center gap-2">
-      <span className="flex h-7 w-7 items-center justify-center rounded-md bg-ink-900 font-display text-sm font-bold text-ember-400 dark:bg-ember-500 dark:text-ink-950">
+    <div className="flex items-center gap-2.5">
+      <span className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-linear-to-br from-ink-800 to-ink-950 font-display text-sm font-bold text-ember-400 shadow-md shadow-ink-950/20 dark:from-ember-500 dark:to-ember-600 dark:text-ink-950">
         A
+        <span className="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/10" />
       </span>
-      <span className="font-display text-[15px] font-semibold text-ink-900 dark:text-ink-50">
-        Anvil
-      </span>
+      <div className="flex flex-col leading-none">
+        <span className="font-display text-[15px] font-semibold text-ink-900 dark:text-ink-50">
+          Anvil
+        </span>
+        <span className="mt-0.5 text-[10px] font-medium tracking-wider text-ink-400 uppercase dark:text-ink-600">
+          Text Workshop
+        </span>
+      </div>
     </div>
   )
 }
@@ -149,7 +169,7 @@ function ThemeButton({ theme, toggleTheme }) {
   return (
     <button
       onClick={toggleTheme}
-      className="rounded-lg p-2 text-ink-500 hover:bg-ink-100 dark:text-ink-400 dark:hover:bg-ink-800"
+      className="rounded-lg p-2 text-ink-500 transition-all hover:bg-ink-100 hover:text-ink-800 dark:text-ink-400 dark:hover:bg-ink-800 dark:hover:text-ink-100"
       aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
     >
       {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
@@ -159,12 +179,14 @@ function ThemeButton({ theme, toggleTheme }) {
 
 function Footer({ theme, toggleTheme }) {
   return (
-    <div className="mt-auto flex items-center justify-between border-t border-ink-200 px-5 py-4 dark:border-ink-800">
-      <p className="flex items-center gap-1.5 text-xs text-ink-400">
-        <Hammer className="h-3.5 w-3.5" />
-        Runs in your browser
-      </p>
-      <ThemeButton theme={theme} toggleTheme={toggleTheme} />
+    <div className="mt-auto border-t border-ink-200 px-4 py-4 dark:border-ink-800">
+      <div className="flex items-center justify-between">
+        <p className="flex items-center gap-1.5 text-xs text-ink-400 dark:text-ink-600">
+          <Hammer className="h-3.5 w-3.5" />
+          Runs in your browser
+        </p>
+        <ThemeButton theme={theme} toggleTheme={toggleTheme} />
+      </div>
     </div>
   )
 }
