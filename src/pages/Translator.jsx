@@ -181,8 +181,10 @@ export default function Translator() {
         <p className="font-mono text-xs tracking-wider text-ember-600 uppercase dark:text-ember-400">
           Translator
         </p>
-        <h1 className="mt-2 font-display text-2xl font-semibold text-ink-900 sm:text-3xl dark:text-ink-50">
-          Say it in another language.
+        <h1 className="mt-2 font-display text-2xl font-semibold sm:text-3xl">
+          <span className="text-gradient bg-linear-to-r from-ink-900 to-ink-700 dark:from-ink-50 dark:to-ink-200">
+            Say it in another language.
+          </span>
         </h1>
         <p className="mt-2 max-w-xl text-sm text-ink-500 dark:text-ink-400">
           Type or paste a passage below — translation starts automatically, or press{' '}
@@ -207,7 +209,7 @@ export default function Translator() {
               placeholder="Start typing…"
               rows={8}
               aria-label="Text to translate"
-              className="w-full resize-none rounded-2xl border border-ink-200 bg-white/70 p-4 text-[15px] text-ink-800 placeholder:text-ink-300 focus:border-ember-500/50 focus:ring-2 focus:ring-ember-500/20 dark:border-ink-800 dark:bg-ink-900/40 dark:text-ink-100 dark:placeholder:text-ink-600"
+              className="w-full resize-none rounded-2xl border border-ink-200 bg-white/80 p-4 pb-10 text-[15px] text-ink-800 placeholder:text-ink-300 shadow-sm transition-shadow focus:border-ember-500/50 focus:shadow-md focus:ring-2 focus:ring-ember-500/20 focus:outline-none dark:border-ink-800 dark:bg-ink-900/50 dark:text-ink-100 dark:placeholder:text-ink-600"
             />
             <div className="absolute right-3 bottom-3 flex items-center gap-2">
               <button
@@ -239,7 +241,7 @@ export default function Translator() {
             </button>
           </div>
           <div
-            className="relative min-h-[176px] rounded-2xl border border-ink-200 bg-ink-100/40 p-4 dark:border-ink-800 dark:bg-ink-900/20"
+            className="relative min-h-44 rounded-2xl border border-ink-200 bg-linear-to-br from-ink-50/80 to-ink-100/40 p-4 shadow-inner dark:border-ink-800 dark:from-ink-900/30 dark:to-ink-900/10"
             aria-live="polite"
             aria-busy={status === 'loading'}
           >
@@ -288,7 +290,7 @@ export default function Translator() {
           type="button"
           onClick={handleSwap}
           disabled={sourceLang === 'auto'}
-          className="flex items-center gap-1.5 rounded-full border border-ink-200 px-3 py-1.5 text-xs font-medium text-ink-500 transition-colors hover:border-ember-500/40 hover:text-ember-600 disabled:cursor-not-allowed disabled:opacity-40 dark:border-ink-800 dark:text-ink-400"
+          className="flex items-center gap-1.5 rounded-full border border-ink-200 bg-white/80 px-3 py-1.5 text-xs font-medium text-ink-500 shadow-sm transition-all hover:border-ember-500/40 hover:text-ember-600 hover:shadow disabled:cursor-not-allowed disabled:opacity-40 dark:border-ink-800 dark:bg-ink-900/40 dark:text-ink-400"
         >
           <ArrowLeftRight className="h-3.5 w-3.5" />
           Swap
