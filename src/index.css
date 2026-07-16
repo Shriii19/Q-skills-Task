@@ -85,4 +85,20 @@
   .dark .scrollbar-thin {
     scrollbar-color: var(--color-ink-700) transparent;
   }
+  .text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .glow-ember {
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-ember-500) 30%, transparent),
+                0 4px 24px color-mix(in srgb, var(--color-ember-500) 12%, transparent);
+  }
+  .card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px color-mix(in srgb, var(--color-ink-950) 8%, transparent);
+  }
 }
