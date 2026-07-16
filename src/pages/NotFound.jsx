@@ -6,12 +6,15 @@ export default function NotFound() {
   useDocumentTitle('Anvil — Page not found')
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 py-20 text-center">
-      <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ink-100 text-ink-400 dark:bg-ink-800 dark:text-ink-500">
-        <Hammer className="h-5 w-5" />
+    <div className="flex flex-col items-center justify-center gap-5 py-20 text-center">
+      <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br from-ink-100 to-ink-200 text-ink-400 shadow-inner dark:from-ink-800 dark:to-ink-900 dark:text-ink-500">
+        <Hammer className="h-6 w-6" />
       </span>
       <div>
-        <h1 className="font-display text-2xl font-semibold text-ink-900 dark:text-ink-50">
+        <p className="font-mono text-xs tracking-wider text-ember-600 uppercase dark:text-ember-400">
+          404
+        </p>
+        <h1 className="mt-2 font-display text-2xl font-semibold text-ink-900 dark:text-ink-50">
           Nothing on this shelf.
         </h1>
         <p className="mt-2 text-sm text-ink-500 dark:text-ink-400">
@@ -20,7 +23,7 @@ export default function NotFound() {
       </div>
       <Link
         to="/"
-        className="mt-2 flex items-center gap-1.5 rounded-full border border-ink-200 px-4 py-2 text-xs font-medium text-ink-600 transition-colors hover:border-ember-500/40 hover:text-ember-600 dark:border-ink-800 dark:text-ink-300"
+        className="flex items-center gap-1.5 rounded-full border border-ink-200 bg-white/80 px-5 py-2 text-xs font-medium text-ink-600 shadow-sm transition-all hover:-translate-y-px hover:border-ember-500/40 hover:text-ember-600 hover:shadow dark:border-ink-800 dark:bg-ink-900/40 dark:text-ink-300"
       >
         <ArrowLeft className="h-3.5 w-3.5" />
         Back to overview
