@@ -3,7 +3,7 @@ import { NavLink, useLocation, useOutlet } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Dices, Hammer, Languages, LayoutGrid, Menu, Moon, Sun, X } from 'lucide-react'
 import clsx from 'clsx'
-import { useTheme } from '../../context/ThemeContext'
+import { useTheme } from '../../lib/useTheme'
 
 const NAV_ITEMS = [
   { to: '/', label: 'Overview', icon: LayoutGrid, end: true },

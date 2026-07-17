@@ -1,6 +1,6 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 
-const ThemeContext = createContext(null)
+export const ThemeContext = createContext(null)
 const STORAGE_KEY = 'anvil-theme'
 
 function getInitialTheme() {
@@ -20,10 +20,4 @@ export function ThemeProvider({ children }) {
   const toggleTheme = () => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))
 
   return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>
-}
-
-export function useTheme() {
-  const ctx = useContext(ThemeContext)
-  if (!ctx) throw new Error('useTheme must be used within a ThemeProvider')
-  return ctx
 }
