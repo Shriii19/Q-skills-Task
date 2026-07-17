@@ -1,9 +1,8 @@
-import { createContext, useCallback, useContext, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { CheckCircle2, Info, X, XCircle } from 'lucide-react'
 import clsx from 'clsx'
-
-const ToastContext = createContext(null)
+import { ToastContext } from './toast'
 
 const ICONS = {
   success: CheckCircle2,
