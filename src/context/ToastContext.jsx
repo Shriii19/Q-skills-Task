@@ -76,9 +76,3 @@ export function ToastProvider({ children }) {
     </ToastContext.Provider>
   )
 }
-
-export function useToast() {
-  const ctx = useContext(ToastContext)
-  if (ctx === null) throw new Error('useToast must be used within a ToastProvider')
-  return ctx
-}

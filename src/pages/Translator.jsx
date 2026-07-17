@@ -12,7 +12,7 @@ import {
 import clsx from 'clsx'
 import { useDocumentTitle } from '../lib/useDocumentTitle'
 import { useLocalStorage } from '../lib/useLocalStorage'
-import { useToast } from '../context/ToastContext'
+import { useToast } from '../lib/useToast'
 import { hasRapidApiKey, translateText, TranslationError } from '../lib/translateApi'
 import { LANGUAGES, SOURCE_LANGUAGES, languageName } from '../data/languages'
 

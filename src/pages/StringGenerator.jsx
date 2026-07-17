@@ -3,7 +3,7 @@ import { Check, Copy, Dices, Files, History, RefreshCw } from 'lucide-react'
 import clsx from 'clsx'
 import { useDocumentTitle } from '../lib/useDocumentTitle'
 import { useLocalStorage } from '../lib/useLocalStorage'
-import { useToast } from '../context/ToastContext'
+import { useToast } from '../lib/useToast'
 import {
   buildAlphabet,
   calculateEntropyBits,
