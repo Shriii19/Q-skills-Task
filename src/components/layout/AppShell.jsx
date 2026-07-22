@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation, useOutlet } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Dices, Hammer, Languages, LayoutGrid, Menu, Moon, Sun, X } from 'lucide-react'
+import { Dices, Hammer, Languages, LayoutGrid, Menu, Moon, Sun, X, Command, Keyboard } from 'lucide-react'
 import clsx from 'clsx'
 import { useTheme } from '../../lib/useTheme'
+import CommandPalette from '../ui/CommandPalette'
+import KeyboardShortcutsModal from '../ui/KeyboardShortcutsModal'
+import FloatingActionButton from '../ui/FloatingActionButton'
 
 const NAV_ITEMS = [
   { to: '/', label: 'Overview', icon: LayoutGrid, end: true },
@@ -13,6 +16,8 @@ const NAV_ITEMS = [
 
 export default function AppShell() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
+  const [shortcutsOpen, setShortcutsOpen] = useState(false)
   const { theme, toggleTheme } = useTheme()
   const location = useLocation()
   const outlet = useOutlet()
@@ -28,20 +33,67 @@ export default function AppShell() {
     }
   }, [mobileOpen])
 
+  // Global keyboard shortcuts
+  useEffect(() => {
+    function handleKeyDown(event) {
+      // Command palette: Cmd/Ctrl + K
+      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+        event.preventDefault()
+        setCommandPaletteOpen(true)
+      }
+      // Keyboard shortcuts: ? or /
+      else if ((event.key === '?' || event.key === '/') && !event.metaKey && !event.ctrlKey) {
+        const target = event.target
+        if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return
+        event.preventDefault()
+        setShortcutsOpen(true)
+      }
+      // Toggle theme: Cmd/Ctrl + D
+      else if ((event.metaKey || event.ctrlKey) && event.key === 'd') {
+        event.preventDefault()
+        toggleTheme()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [toggleTheme])
+
   return (
     <div className="min-h-dvh dark:bg-ink-950">
+      <CommandPalette
+        isOpen={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+        onShowShortcuts={() => {
+          setCommandPaletteOpen(false)
+          setShortcutsOpen(true)
+        }}
+      />
+      <KeyboardShortcutsModal
+        isOpen={shortcutsOpen}
+        onClose={() => setShortcutsOpen(false)}
+      />
+      <FloatingActionButton onCommandPalette={() => setCommandPaletteOpen(true)} />
+
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 flex-col border-r border-ink-200 bg-white/70 backdrop-blur-md md:flex dark:border-ink-800 dark:bg-ink-900/50">
         <div className="px-5 pt-6 pb-4">
           <BrandMark />
         </div>
         <div className="mx-3 mb-4 h-px bg-linear-to-r from-transparent via-ink-200 to-transparent dark:via-ink-800" />
         <NavItems />
-        <Footer theme={theme} toggleTheme={toggleTheme} />
+        <Footer theme={theme} toggleTheme={toggleTheme} onShowShortcuts={() => setShortcutsOpen(true)} />
       </aside>
 
       <header className="sticky top-0 z-20 flex items-center justify-between border-b border-ink-200 bg-ink-50/80 px-4 py-3 backdrop-blur-sm md:hidden dark:border-ink-800 dark:bg-ink-950/80">
         <BrandMark />
         <div className="flex items-center gap-1">
+          <button
+            onClick={() => setCommandPaletteOpen(true)}
+            className="rounded-lg p-2 text-ink-500 hover:bg-ink-100 dark:text-ink-400 dark:hover:bg-ink-800"
+            aria-label="Open command palette"
+          >
+            <Command className="h-4 w-4" />
+          </button>
           <ThemeButton theme={theme} toggleTheme={toggleTheme} />
           <button
             onClick={() => setMobileOpen(true)}
@@ -83,7 +135,7 @@ export default function AppShell() {
               <div className="mt-4">
                 <NavItems />
               </div>
-              <Footer theme={theme} toggleTheme={toggleTheme} />
+              <Footer theme={theme} toggleTheme={toggleTheme} onShowShortcuts={() => setShortcutsOpen(true)} />
             </motion.div>
           </div>
         )}
@@ -177,13 +229,23 @@ function ThemeButton({ theme, toggleTheme }) {
   )
 }
 
-function Footer({ theme, toggleTheme }) {
+function Footer({ theme, toggleTheme, onShowShortcuts }) {
   return (
-    <div className="mt-auto border-t border-ink-200 px-4 py-4 dark:border-ink-800">
+    <div className="mt-auto space-y-3 border-t border-ink-200 px-4 py-4 dark:border-ink-800">
+      <button
+        onClick={onShowShortcuts}
+        className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-ink-500 transition-colors hover:bg-ink-100 hover:text-ink-800 dark:text-ink-400 dark:hover:bg-ink-800 dark:hover:text-ink-100"
+      >
+        <Keyboard className="h-3.5 w-3.5" />
+        <span>Keyboard Shortcuts</span>
+        <kbd className="ml-auto rounded bg-ink-100 px-1.5 py-0.5 font-mono text-[10px] dark:bg-ink-800">
+          ?
+        </kbd>
+      </button>
       <div className="flex items-center justify-between">
         <p className="flex items-center gap-1.5 text-xs text-ink-400 dark:text-ink-600">
           <Hammer className="h-3.5 w-3.5" />
-          Runs in your browser
+          Client-side only
         </p>
         <ThemeButton theme={theme} toggleTheme={toggleTheme} />
       </div>
