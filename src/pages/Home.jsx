@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowUpRight, Dices, Languages } from 'lucide-react'
+import { ArrowUpRight, Dices, Languages, Activity, Hash, Type, Clock } from 'lucide-react'
 import { useDocumentTitle } from '../lib/useDocumentTitle'
 import { useLocalStorage } from '../lib/useLocalStorage'
 import { languageName } from '../data/languages'
+import StatsCard from '../components/ui/StatsCard'
 
 const container = {
   hidden: {},
@@ -22,6 +23,7 @@ export default function Home() {
 
   const lastTranslation = translationHistory[0]
   const lastString = stringHistory[0]
+  const hasActivity = stats.translations > 0 || stats.strings > 0
 
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="space-y-10">
@@ -45,7 +47,48 @@ export default function Home() {
         </p>
       </motion.div>
 
-      <motion.div variants={item} className="grid gap-4 sm:grid-cols-2">
+      {hasActivity && (
+        <motion.div variants={item}>
+          <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold text-ink-700 dark:text-ink-300">
+            <Activity className="h-4 w-4" />
+            Your Activity
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <StatsCard
+              icon={Languages}
+              label="Translations"
+              value={stats.translations}
+              color="ember"
+            />
+            <StatsCard
+              icon={Type}
+              label="Characters"
+              value={stats.characters}
+              color="blue"
+            />
+            <StatsCard
+              icon={Hash}
+              label="Strings"
+              value={stats.strings}
+              color="purple"
+            />
+            <StatsCard
+              icon={Clock}
+              label="Recent Items"
+              value={translationHistory.length + stringHistory.length}
+              trend="in history"
+              color="green"
+            />
+          </div>
+        </motion.div>
+      )}
+
+      <motion.div variants={item}>
+        <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold text-ink-700 dark:text-ink-300">
+          <Dices className="h-4 w-4" />
+          Tools
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-2">
         <ToolCard
           to="/translator"
           icon={Languages}
@@ -74,6 +117,7 @@ export default function Home() {
           }
           preview={lastString ? lastString.value : 'Try: a 24-character token, symbols on'}
         />
+        </div>
       </motion.div>
 
       <motion.div
@@ -90,6 +134,10 @@ export default function Home() {
             {timeAgo(lastTranslation.timestamp)}
           </span>
         )}
+        <span className="flex items-center gap-1.5">
+          <span className="text-ink-300 dark:text-ink-600">•</span>
+          Press <kbd className="rounded bg-ink-100 px-1.5 py-0.5 font-mono text-[10px] dark:bg-ink-800">⌘K</kbd> for quick actions
+        </span>
       </motion.div>
     </motion.div>
   )
