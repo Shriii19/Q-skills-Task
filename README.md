@@ -48,16 +48,7 @@ npm run dev
 | `npm run preview` | Preview the production build      |
 | `npm run lint`    | Run Oxlint                         |
 
-## Project structure
 
-```
-src/
-  components/layout/   AppShell — sidebar, mobile nav, theme toggle, route transitions
-  context/              ThemeContext, ToastContext
-  data/                 Language list for the translator
-  lib/                  Random string logic, RapidAPI client, small hooks
-  pages/                Home, Translator, StringGenerator, NotFound
-```
 
 ## Stack
 
