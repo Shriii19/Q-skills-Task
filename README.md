@@ -48,8 +48,3 @@ npm run dev
 | `npm run preview` | Preview the production build      |
 | `npm run lint`    | Run Oxlint                         |
 
-
-
-## Stack
-
-React 19 · React Router 7 · Tailwind CSS 4 · Framer Motion · lucide-react · Vite
